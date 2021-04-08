@@ -7,11 +7,20 @@
 
 import UIKit
 
+protocol TextViewCellDelegate {
+    func updateCellHeight()
+}
+
 class TableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var textView: UITextView!
+    
+    var delegate: TextViewCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        textView.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -19,5 +28,12 @@ class TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
+}
 
+extension TableViewCell : UITextViewDelegate {
+    func textViewDidChange (_ textView: UITextView) {
+        delegate?.updateCellHeight()
+    }
 }
